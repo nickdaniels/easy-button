@@ -3,6 +3,13 @@ class EasyButton < UIButton
   attr_accessor :borderRadius, :font, :textColor, :title
   attr_reader :titleLabel
 
+  def init
+    if super
+      buttonSetup
+    end
+    self
+  end
+
   def initWithFrame(frame)
     if super
       buttonSetup
@@ -15,6 +22,12 @@ class EasyButton < UIButton
       buttonSetup
     end
     self
+  end
+
+  def layoutSubviews
+    super
+    p "layoutSubviews"
+    @titleLabel.frame = self.bounds
   end
 
   def buttonSetup
