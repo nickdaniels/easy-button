@@ -27,25 +27,19 @@ class EasyButton < UIButton
 
     self.opaque = false
     self.backgroundColor = UIColor.clearColor
-    self.backgroundColor = "#ff0000"
     self.borderRadius = 10
     self.font = UIFont.boldSystemFontOfSize(18)
     self.textColor = '#fff'
   end
 
   def backgroundColor=(value)
-    if value.is_a? String
-      rgb = rgbFromHex(value)
-      @backGroundColorRed = rgb[0]
-      @backGroundColorGreen = rgb[1]
-      @backGroundColorBlue = rgb[2]
-      @backgroundColorTop = UIColor.colorWithRed(@backGroundColorRed * 1.2, green:@backGroundColorGreen * 1.2, blue:@backGroundColorBlue * 1.2, alpha:1)
-      @backgroundColorBottom = UIColor.colorWithRed(@backGroundColorRed * 0.7, green:@backGroundColorGreen * 0.7, blue:@backGroundColorBlue * 0.7, alpha:1)
-    elsif value = UIColor.clearColor
+    value = value.uicolor if value.is_a?(String)
+    
+    if value = UIColor.clearColor
       super
     else
-      @backgroundColorStart = value
-      @backgroundColorBottom = value
+      @topColor = value
+      @bottomColor = value
     end
     self.setNeedsDisplay
     self
