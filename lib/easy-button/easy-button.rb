@@ -46,21 +46,13 @@ class EasyButton < UIButton
   end
 
   def topColor=(value)
-    rgb = rgbFromHex(value)
-    @backGroundColorRed = rgb[0]
-    @backGroundColorGreen = rgb[1]
-    @backGroundColorBlue = rgb[2]
-    @topColor = UIColor.colorWithRed(@backGroundColorRed, green: @backGroundColorGreen, blue: @backGroundColorBlue, alpha: 1)
+    @topColor = value.is_a?(String) ? value.uicolor : value
     self.setNeedsDisplay
     self
   end
 
   def bottomColor=(value)
-    rgb = rgbFromHex(value)
-    @bottomColorRed = rgb[0]
-    @bottomColorGreen = rgb[1]
-    @bottomColorBlue = rgb[2]
-    @bottomColor = UIColor.colorWithRed(@bottomColorRed, green: @bottomColorGreen, blue: @bottomColorBlue, alpha: 1)
+    @bottomColor = value.is_a?(String) ? value.uicolor : value
     self.setNeedsDisplay
     self
   end
@@ -80,8 +72,7 @@ class EasyButton < UIButton
   def textColor=(value)
     @textColor = value
     if value.is_a? String
-      red, green, blue = rgbFromHex(value)
-      @titleLabel.textColor = UIColor.colorWithRed(red, green:green, blue:blue, alpha:1)
+      @titleLabel.textColor = value.uicolor
     else
       @titleLabel.textColor = value
     end
@@ -99,8 +90,8 @@ class EasyButton < UIButton
     super
     context = UIGraphicsGetCurrentContext()
 
-    if self.state == UIControlStateHighlighted && @backGroundColorRed && @backGroundColorGreen && @backGroundColorBlue
-      backgroundColorTop = UIColor.colorWithRed(@backGroundColorRed * 0.8, green:@backGroundColorGreen * 0.8, blue:@backGroundColorBlue * 0.8, alpha:1).CGColor
+    if self.state == UIControlStateHighlighted && @topColor
+      backgroundColorTop = @topColor.mix_with("#000000".uicolor, 0.2).CGColor
     else
       backgroundColorTop = @topColor.CGColor
     end
